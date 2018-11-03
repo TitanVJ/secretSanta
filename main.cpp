@@ -10,11 +10,21 @@ using namespace std;
 void Tokenize(string line, vector<string>& tokens, string delimiters = "\t") {
 	string token = "";
 	string OneCharString = " ";
+    int delimEncounters = 0;
 	for (int i = 0; i < line.size(); i++)
 		if (find(delimiters.begin(), delimiters.end(), line[i]) != delimiters.end()) // line[i] is one of the delimiter characters
 		{
-			tokens.push_back(token);
-			token = "";
+            // This'll skip the date and the consent answer
+            if(delimEncounters < 2) {
+                cout << "if\t" << delimEncounters << endl;
+                delimEncounters++;
+                token = "";
+                continue;
+            }
+            else {
+                tokens.push_back(token);
+                token = "";
+            }
 		}
 		else
 		{
@@ -41,24 +51,20 @@ int main(int argc, char *argv[]){
     will be used for an oop design. maybe future things as this just needs to work
     */
     string temp = "";
-    getline(cin, temp);
-    cout << temp << endl;
+    getline(cin, temp); // The first line is the question #'s
 
     vector<string> details; //shouldnt be an array since future ppl might increase # of data points
     vector<vector<string>> list;
-
     while(getline(cin, temp)){
-        cout << temp << endl;
         Tokenize(temp, details);
         //push tokens into list?
         list.push_back(details);
         details.clear();
     }
-    int k = 69;
-    cout << endl;
+
     for(auto i = list.begin(); i != list.end(); ++i){
         for(auto j = i->begin(); j != i->end(); ++j){
-            cout << *j << " ";
+            cout << *j << endl;
         }
         cout << endl;
     }
