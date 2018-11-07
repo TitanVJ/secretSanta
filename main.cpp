@@ -16,7 +16,6 @@ void Tokenize(string line, vector<string>& tokens, string delimiters = "\t") {
 		{
             // This'll skip the date and the consent answer
             if(delimEncounters < 2) {
-                cout << "if\t" << delimEncounters << endl;
                 delimEncounters++;
                 token = "";
                 continue;
@@ -36,6 +35,19 @@ void Tokenize(string line, vector<string>& tokens, string delimiters = "\t") {
 		tokens.push_back(token);
 }
 
+void parseDate(vector<vector<string>>& data){
+    // do something
+    string line; 
+    vector<string> details; 
+
+    while(getline(cin, line)){
+        Tokenize(line, details);
+        data.push_back(details);
+        details.clear();
+
+    }
+}
+
 int main(int argc, char *argv[]){
 
     /* Plan: 
@@ -50,22 +62,18 @@ int main(int argc, char *argv[]){
     gonna need a shit ton of functions make a person class or struct 
     will be used for an oop design. maybe future things as this just needs to work
     */
+
+    /*
+    Menu entries: 
+
+    */
     string temp = "";
     getline(cin, temp); // The first line is the question #'s
 
-    vector<string> details; //shouldnt be an array since future ppl might increase # of data points
-    vector<vector<string>> list;
-    while(getline(cin, temp)){
-        Tokenize(temp, details);
-        //push tokens into list?
-        list.push_back(details);
-        details.clear();
-    }
-
     for(auto i = list.begin(); i != list.end(); ++i){
         for(auto j = i->begin(); j != i->end(); ++j){
-            cout << *j << endl;
-        }
+            cout << *j << " ";
+            //here it'll populate the data structure for the participants        }
         cout << endl;
     }
 }
