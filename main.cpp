@@ -67,10 +67,16 @@ int main(int argc, char *argv[]){
     Menu entries: 
 
     */
-    string temp = "";
-    getline(cin, temp); // The first line is the question #'s
+   if(argc < 3){
+       cout << "Usage: ./{name} data.txt questions.txt" << endl;
+       cout << "data.txt is survey data file downloaded from websurvey" << endl;
+       cout << "questions.txt is a text file containing the question from the survey regarding the details asked about the participant" << endl;
+       return 1;
+   }
 
-    for(auto i = list.begin(); i != list.end(); ++i){
+    vector<vector<string>> data;
+
+    for(auto i = data.begin(); i != data.end(); ++i){
         for(auto j = i->begin(); j != i->end(); ++j){
             cout << *j << " ";
             //here it'll populate the data structure for the participants        }
