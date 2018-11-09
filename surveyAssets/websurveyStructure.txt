@@ -1,7 +1,6 @@
 Title page with rules
 Consent page accepting rules on title page
-First name
-Last name
+Enter name (collated from the 2 questions)
 SFU E-mail 
 Age
 SFU Id page [maybe don't include, what would this be used for]
