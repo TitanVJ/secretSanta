@@ -21,23 +21,7 @@ class Santa{
         
         // Constructors
         Santa();
-        Santa(std::string, std::string, int);
-
-        // Getters
-        std::string name();
-        std::string email();
-        int age();
-        int santaId();
-        int gifterId();
-        std::string details();
-
-        // Setters
-        std::string name(std::string);
-        std::string email(std::string);
-        int age(int);
-        int santaId(int);
-        int gifterId(int);
-        std::string details(std::string);
+        Santa(std::string, std::string, int, int, int, std::vector<std::string>&);
 
         // Utility
         ~Santa();
