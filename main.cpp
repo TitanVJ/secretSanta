@@ -65,7 +65,15 @@ void parseData(vector<vector<string>>& data, string file){
 }
 
 int main(int argc, char *argv[]){
-
+    /*
+        Plan:
+            1. parse data
+            2. parse questions
+            3. output files
+            4. shuffle and randomize
+            5. assign gifters
+            6. output menu to terminal [show gifter/giftee pairings, send emails]
+    */
    if(argc < 3){
        cout << "Usage: ./{name} data.txt questions.txt" << endl;
        cout << "data.txt is survey data file downloaded from websurvey" << endl;
