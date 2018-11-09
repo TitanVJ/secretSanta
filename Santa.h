@@ -20,7 +20,7 @@ class Santa{
         
         // Constructors
         Santa();
-        Santa(std::string, std::string, int, int, int, int, std::vector<std::string>&);
+        Santa(std::string, std::string, int, int, int, std::vector<std::string>&);
 
         // Utility
         ~Santa();
