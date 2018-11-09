@@ -3,11 +3,10 @@
 #include <vector> 
 #include <algorithm>
 #include <string>
+#include <regex>
 // smtp library here 
 
 using namespace std; 
-
-vector<string> questions;
 
 void Tokenize(string line, vector<string>& tokens, string delimiters = "\t") {
 	string token = "";
@@ -37,14 +36,14 @@ void Tokenize(string line, vector<string>& tokens, string delimiters = "\t") {
 		tokens.push_back(token);
 }
 
-void getQuestions(string file){
+void getQuestions(vector<string>& q, string file){
     ifstream input;
     input.open(file);
 
     string line;
 
     while(getline(input, line)){
-        questions.push_back(line);
+        q.push_back(line);
     }
 }
 
@@ -69,6 +68,8 @@ int main(int argc, char *argv[]){
         Plan:
             1. parse data
             2. parse questions
+            2.25 cull invalidate emails
+            2.5 create Santa objects; seperate from parsing data so can weed out non sfu email profiles
             3. output files
             4. shuffle and randomize
             5. assign gifters
@@ -81,9 +82,13 @@ int main(int argc, char *argv[]){
        return 1;
    }
 
+    // currently acting as placeholder for the all the data in the user profiles
+    // once ready this vector will be holding Santa profiles
     vector<vector<string>> data;
+    vector<string> questions;
+
     parseData(data, argv[1]);
-    getQuestions(argv[2]);
+    getQuestions(questions, argv[2]);
 
     for(auto i = data.begin(); i != data.end(); ++i){
         for(auto j = i->begin(); j != i->end(); ++j){
