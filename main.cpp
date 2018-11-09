@@ -7,6 +7,8 @@
 
 using namespace std; 
 
+vector<string> questions;
+
 void Tokenize(string line, vector<string>& tokens, string delimiters = "\t") {
 	string token = "";
 	string OneCharString = " ";
@@ -35,12 +37,26 @@ void Tokenize(string line, vector<string>& tokens, string delimiters = "\t") {
 		tokens.push_back(token);
 }
 
-void parseDate(vector<vector<string>>& data){
+void getQuestions(string file){
+    ifstream input;
+    input.open(file);
+
+    string line;
+
+    while(getline(input, line)){
+        questions.push_back(line);
+    }
+}
+
+void parseData(vector<vector<string>>& data, string file){
     // do something
+    ifstream input;
+    input.open(file);
+
     string line; 
     vector<string> details; 
 
-    while(getline(cin, line)){
+    while(getline(input, line)){
         Tokenize(line, details);
         data.push_back(details);
         details.clear();
@@ -50,36 +66,30 @@ void parseDate(vector<vector<string>>& data){
 
 int main(int argc, char *argv[]){
 
-    /* Plan: 
-    1: data parsing
-    2: shuffle 
-    3: randomize
-    4: email
-
-    part of emailing will be a file containing the template
-    email with keywords for things to replace, basically their names 
-
-    gonna need a shit ton of functions make a person class or struct 
-    will be used for an oop design. maybe future things as this just needs to work
-    */
-
-    /*
-    Menu entries: 
-
-    */
    if(argc < 3){
        cout << "Usage: ./{name} data.txt questions.txt" << endl;
        cout << "data.txt is survey data file downloaded from websurvey" << endl;
-       cout << "questions.txt is a text file containing the question from the survey regarding the details asked about the participant" << endl;
+       cout << "questions.txt is a text file containing the questions from the survey regarding the details asked about the participant" << endl;
        return 1;
    }
 
     vector<vector<string>> data;
+    parseData(data, argv[1]);
+    getQuestions(argv[2]);
 
     for(auto i = data.begin(); i != data.end(); ++i){
         for(auto j = i->begin(); j != i->end(); ++j){
-            cout << *j << " ";
+            cout << *j;
+            auto k = j;
+            k++;
+            if(k != i->end())
+                cout << " ";
             //here it'll populate the data structure for the participants        }
+        }
         cout << endl;
+    }
+
+    for(auto i = questions.begin(); i != questions.end(); ++i){
+        cout << *i << endl;
     }
 }
