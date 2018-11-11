@@ -53,7 +53,11 @@ void parseData(vector<vector<string>>& data, string file){
     input.open(file);
 
     string line; 
-    vector<string> details; 
+    vector<string> details;
+
+    // Remove first line; contains the question numbers
+    getline(input, line);
+    line = "";
 
     while(getline(input, line)){
         Tokenize(line, details);
@@ -89,8 +93,10 @@ int main(int argc, char *argv[]){
 
     parseData(data, argv[1]);
     getQuestions(questions, argv[2]);
+    int h = 0;
 
     for(auto i = data.begin(); i != data.end(); ++i){
+        cout << "person " << h << endl;
         for(auto j = i->begin(); j != i->end(); ++j){
             cout << *j;
             auto k = j;
@@ -100,6 +106,7 @@ int main(int argc, char *argv[]){
             //here it'll populate the data structure for the participants        }
         }
         cout << endl;
+        ++h;
     }
 
     for(auto i = questions.begin(); i != questions.end(); ++i){
