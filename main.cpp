@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <string>
 #include <regex>
+#include "Santa.h"
 // smtp library here 
 
 using namespace std; 
@@ -54,6 +55,7 @@ void parseData(vector<vector<string>>& data, string file){
 
     string line; 
     vector<string> details;
+    regex re("@sfu\.ca$");
 
     // Remove first line; contains the question numbers
     getline(input, line);
@@ -61,9 +63,35 @@ void parseData(vector<vector<string>>& data, string file){
 
     while(getline(input, line)){
         Tokenize(line, details);
-        data.push_back(details);
+        if(regex_search(details[2], re)){
+            data.push_back(details);
+        }
         details.clear();
+    }
+}
 
+void genSantas(vector<vector<string>>& data, vector<Santa>& santas){
+    int numberOfParticpants = data.size();
+    int sfuId, age, innerSize;
+    string name, email;
+    vector<string> details;
+
+    for(int i = 0; i < numberOfParticpants; ++i){
+        sfuId = stoi(data[i][0]);
+        name = data[i][1];
+        email = data[i][2];
+        age = stoi(data[i][3]);
+
+        // everything after is the details
+        innerSize = data[i].size();
+
+        for(int j = 4; j < innerSize; ++j){
+            details.push_back(data[i][j]);
+        }
+
+        // generate the santa profiles and push onto the santa vector
+        santas.push_back(new Santa(name, email, age, sfuId, i, details));
+        details.clear();
     }
 }
 
@@ -71,9 +99,8 @@ int main(int argc, char *argv[]){
     /*
         Plan:
             1. parse data
-            2. parse questions
-            2.25 cull invalidate emails
-            2.5 create Santa objects; seperate from parsing data so can weed out non sfu email profiles
+            2. parse questions & cull invalidate emails
+            2.5 create Santa objects
             3. output files
             4. shuffle and randomize
             5. assign gifters
@@ -90,9 +117,14 @@ int main(int argc, char *argv[]){
     // once ready this vector will be holding Santa profiles
     vector<vector<string>> data;
     vector<string> questions;
+    vector<Santa> santas;
 
     parseData(data, argv[1]);
-    getQuestions(questions, argv[2]);
+    //getQuestions(questions, argv[2]);
+    
+    
+    
+    // All code below is for testing data parsing
     int h = 0;
 
     for(auto i = data.begin(); i != data.end(); ++i){
