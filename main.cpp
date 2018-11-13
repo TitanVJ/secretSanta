@@ -44,6 +44,10 @@ void getQuestions(vector<string>& q, string file){
     string line;
 
     while(getline(input, line)){
+        int sLen = line.length();
+        for(int i = 0; i < sLen; ++i){
+            line[i] = toupper(line[i]);
+        }
         q.push_back(line);
     }
 }
@@ -90,7 +94,7 @@ void genSantas(vector<vector<string>>& data, vector<Santa>& santas){
         }
 
         // generate the santa profiles and push onto the santa vector
-        santas.push_back(new Santa(name, email, age, sfuId, i, details));
+        santas.push_back(Santa(name, email, age, sfuId, details));
         details.clear();
     }
 }
@@ -120,13 +124,14 @@ int main(int argc, char *argv[]){
     vector<Santa> santas;
 
     parseData(data, argv[1]);
-    //getQuestions(questions, argv[2]);
-    
+    getQuestions(questions, argv[2]);
+    genSantas(data, santas);
+
     
     
     // All code below is for testing data parsing
     int h = 0;
-
+    cout << santas[0] << endl;
     for(auto i = data.begin(); i != data.end(); ++i){
         cout << "person " << h << endl;
         for(auto j = i->begin(); j != i->end(); ++j){
