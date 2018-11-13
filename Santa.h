@@ -12,7 +12,9 @@ class Santa{
 
         //Utility
         friend std::ostream& operator<<(std::ostream& output, const Santa&); 
-
+        friend void shuffleAndRandomize(std::vector<Santa>& s);
+        friend void genSanta(std::vector<std::vector<std::string>>& data, std::vector<Santa>& santas);
+        
     private:
         std::string name;
         std::string email;
