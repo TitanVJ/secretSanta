@@ -99,16 +99,58 @@ void genSantas(vector<vector<string>>& data, vector<Santa>& santas){
     }
 }
 
+int myRand(int i){
+    return rand()%i;
+}
+
+void shuffleAndRandomize(vector<Santa>& s){
+    /*  Shuffles and randomizes the participants of secret santa
+        and assigns everyone's santa and gifter id's
+    */
+
+    int size = s.size();
+    vector<int> santaIndex;
+    
+    // This init the vector with index's 
+    // for the santa vector, it'll be used
+    // to randomize and shuffle them
+    for(int i = 0; i < size; ++i){
+        santaIndex.push_back(i);
+    }
+
+    // Randomize setup
+    srand(unsigned(time(0)));
+
+    // Random Shuffle
+    random_shuffle(santaIndex.begin(), santaIndex.end(), myRand);
+
+    // Assign santa and gifter Id's
+    for(int i = 0; i < size - 1; ++i){
+        s[i].santaId = santaIndex[i];
+        s[i].gifterId = santaIndex[i + 1];
+    }
+
+    // Assign the last person in the index
+    // since it wrap around 
+    s[size - 1].santaId = santaIndex[size - 1];
+    s[size - 1].gifterId = santaIndex[0];
+
+}
+
 int main(int argc, char *argv[]){
     /*
         Plan:
             1. parse data
             2. parse questions & cull invalidate emails
-            2.5 create Santa objects
-            3. output files
+            3. create Santa objects
+            3.5 verify emails
             4. shuffle and randomize
-            5. assign gifters
-            6. output menu to terminal [show gifter/giftee pairings, send emails]
+            5. assign santa id and gifter id's
+            6. output files both admin and public
+            7. output menu to terminal
+            menu options: 
+                - view data
+                - send emails
     */
    if(argc < 3){
        cout << "Usage: ./{name} data.txt questions.txt" << endl;
@@ -126,6 +168,7 @@ int main(int argc, char *argv[]){
     parseData(data, argv[1]);
     getQuestions(questions, argv[2]);
     genSantas(data, santas);
+    shuffleAndRandomize(santas);
 
     
     
@@ -149,4 +192,6 @@ int main(int argc, char *argv[]){
     for(auto i = questions.begin(); i != questions.end(); ++i){
         cout << *i << endl;
     }
+
+    for(auto i = santas.begin(); i != santas.end(); ++i){cout << *i <<endl;}
 }
