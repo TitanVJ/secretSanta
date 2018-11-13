@@ -8,7 +8,7 @@ class Santa{
     public:
         // Constructors
         Santa();
-        Santa(std::string, std::string, int, int, int, std::vector<std::string>&);
+        Santa(std::string, std::string, int, int, std::vector<std::string>&);
 
         //Utility
         friend std::ostream& operator<<(std::ostream& output, const Santa&); 
