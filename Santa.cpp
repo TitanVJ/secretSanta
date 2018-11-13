@@ -7,15 +7,12 @@ using namespace std;
 
 Santa::Santa() : name(NULL), email(NULL), age(NULL), sfuId(NULL), details(NULL){}
 
-Santa::Santa(string name, string email, int age, int sfuId, vector<string>& details){
-    name = name;
-    email = email; 
-    age = age; 
-    sfuId = sfuId;
-    details = details;
-
-    santaId = NULL;
-    gifterId = NULL;
+Santa::Santa(string _name, string _email, int _age, int _sfuId, vector<string>& _details){
+    name = _name;
+    email = _email; 
+    age = _age; 
+    sfuId = _sfuId;
+    details = _details;
 }
 
 ostream& operator<<(ostream& out, const Santa& sObj){
