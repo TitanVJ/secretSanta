@@ -21,7 +21,7 @@ ostream& operator<<(ostream& out, const Santa& sObj){
     // include sfu id since the program will only be run by execs
 
     out << "Name:\t" << sObj.name << endl;
-    out << "Email\t" << sObj.email << endl;
+    out << "Email:\t" << sObj.email << endl;
     out << "Age:\t" << sObj.age << endl;
     out << "SFU Id:\t" << sObj.sfuId << endl;
     out << "Santa Id:\t" << sObj.santaId << endl;
