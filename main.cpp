@@ -50,6 +50,7 @@ void getQuestions(vector<string>& q, string file){
         }
         q.push_back(line);
     }
+    input.close();
 }
 
 void parseData(vector<vector<string>>& data, string file){
@@ -72,6 +73,7 @@ void parseData(vector<vector<string>>& data, string file){
         }
         details.clear();
     }
+    input.close();
 }
 
 void genSantas(vector<vector<string>>& data, vector<Santa>& santas){
@@ -233,7 +235,7 @@ void sendTestEmails(vector<Santa>& s){
     while(getline(emailMessage, line)){
         emailMsg += line + '\n';
     }
-
+    emailMessage.close();
     // Make the mailio objects
 
 }
