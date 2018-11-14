@@ -147,7 +147,7 @@ void genSantaFiles(vector<Santa>& s, vector<string>& q, bool admin){
     
     for(auto i = s.begin(); i != s.end(); ++i){
         Santa santa = *i;
-        fileName = string("[") + to_string(santa.santaId) + "]" + santa.name + ".txt";
+        fileName = string("_") + to_string(santa.santaId) + santa.name + ".txt";
         if(admin){
             outFile.open("adminFiles/" + fileName);
         }
@@ -181,7 +181,7 @@ int main(int argc, char *argv[]){
             have multiple menu's only give shuffle and randomize after test email and removal menu
             maybe just auto shuffle after they exit first menu and ouput all the files
 
-            
+
             3.5 verify emails [remove non sfu and test email]
             4. shuffle and randomize
             5. assign santa id and gifter id's
