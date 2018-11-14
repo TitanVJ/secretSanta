@@ -235,7 +235,7 @@ void sendTestEmails(vector<Santa>& s){
 
     emailMessage.open(emailFileName);
     while(getline(emailMessage, line)){
-        emailMsg += line + '\n';
+        emailMsg += line;
     }
     emailMessage.close();
 
@@ -246,15 +246,11 @@ void sendTestEmails(vector<Santa>& s){
 
         for(auto i = s.begin(); i != s.end(); ++i){
             Santa santa = *i;
-
             mailio::message msg;
             msg.from(mailio::mail_address(name, fromField));
             msg.add_recipient(mailio::mail_address(santa.name, santa.email));
             msg.subject(subject);
-            ifstream attchment("publicFiles/_" + to_string(santa.gifterId) + ".txt");
-            msg.attach(attchment, "_" + to_string(santa.gifterId) + ".txt", mailio::message::media_type_t::TEXT, "txt");
             msg.content(emailMsg);
-
             conn.submit(msg);
 
         }
@@ -268,6 +264,34 @@ void sendTestEmails(vector<Santa>& s){
         cout << exc.what() << endl;
     }
 
+}
+
+void removeEntries(vector<Santa>& s){
+    string name, yN;
+    bool cont = true;
+    bool found = false;
+
+    while(cont){
+        cout << "Enter name of participant to remove";
+        cin >> name;
+
+        for (auto i = s.begin(); i != s.end(); ++i){
+            Santa santa = *i; 
+            if (santa.name == name){
+                // delete entry in vector
+                cout << "Entrant " << name << " found and removed" << endl;
+                break;
+            }
+        }
+        if(!found)
+            cout << "Entrant" << name << " not found in list, make sure you typed the name correctly." << endl;
+
+        cout << "Do you have more entrants to delete? (Y or N): "; 
+        cin >> yN;
+        if(yN != "Y"){
+            cont = false;
+        }
+    }
 }
 
 int main(int argc, char *argv[]){
@@ -310,22 +334,29 @@ int main(int argc, char *argv[]){
 
     //output menu
     int choice;
-
-    while(true){
+    bool menu = true;
+    while(menu){
         cout << "Menu:" << endl;
         cout << "1. Send Test Email" << endl;
         cout << "2. Remove Secret Santa Entry" << endl;
+        cout << "3. Exit menu" << endl;
         cout << "Enter the number matching your menu choice:";
         cin >> choice;
 
         switch(choice){
             case 1:
+                sendTestEmails(santas);
+                cout << endl << "Check your email to see if any emails bounced back and then use menu option 2 if some did" << endl;
                 break;
             case 2:
+                removeEntries(santas);
                 break;
+            case 3:
+                menu = false;
             default: 
                 continue;
         }
+        choice = NULL;
     }
     // shuffleAndRandomize(santas);
     // genSantaFiles(santas, questions);
