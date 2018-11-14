@@ -5,7 +5,8 @@
 #include <string>
 #include <regex>
 #include "Santa.h"
-// smtp library here 
+#include <mailio/message.hpp>
+#include <mailio/smtp.hpp>
 
 using namespace std; 
 
@@ -236,7 +237,35 @@ void sendTestEmails(vector<Santa>& s){
         emailMsg += line + '\n';
     }
     emailMessage.close();
+
     // Make the mailio objects
+    try{
+        mailio::smtps conn(smtpServer, port);
+        conn.authenticate(userEmail, userPass, mailio::smtps::auth_method_t::LOGIN);
+
+        for(auto i = s.begin(); i != s.end(); ++i){
+            Santa santa = *i;
+
+            mailio::message msg;
+            msg.from(mailio::mail_address(name, fromField));
+            msg.add_recipient(mailio::mail_address(santa.name, santa.email));
+            msg.subject(subject);
+            ifstream attchment("publicFiles/_" + to_string(santa.gifterId) + ".txt");
+            msg.attach(attchment, "_" + to_string(santa.gifterId) + ".txt", mailio::message::media_type_t::TEXT, "txt");
+            msg.content(emailMsg);
+
+            conn.submit(msg);
+
+        }
+    }
+    catch (mailio::smtp_error& exc)
+    {
+        cout << exc.what() << endl;
+    }
+    catch (mailio::dialog_error& exc)
+    {
+        cout << exc.what() << endl;
+    }
 
 }
 
