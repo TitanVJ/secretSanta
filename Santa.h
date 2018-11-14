@@ -15,6 +15,7 @@ class Santa{
         friend void shuffleAndRandomize(std::vector<Santa>& s);
         friend void genSanta(std::vector<std::vector<std::string>>& data, std::vector<Santa>& santas);
         friend void genSantaFiles(std::vector<Santa>& s, std::vector<std::string>& q);
+        friend void sendTestEmails(std::vector<Santa>& s);
 
     private:
         std::string name;
