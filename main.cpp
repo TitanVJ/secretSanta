@@ -203,6 +203,7 @@ int main(int argc, char *argv[]){
             1. parse data
             2. parse questions & cull invalidate emails
             3. create Santa objects
+
             OUTPUT MENU[test email, remove entry, shuffle and randomize]
             have multiple menu's only give shuffle and randomize after test email and removal menu
             maybe just auto shuffle after they exit first menu and ouput all the files
@@ -233,9 +234,28 @@ int main(int argc, char *argv[]){
     parseData(data, argv[1]);
     getQuestions(questions, argv[2]);
     genSantas(data, santas);
+
+    //output menu
+    int choice;
+    
+    while(true){
+        cout << "Menu:" << endl;
+        cout << "1. Send Test Email" << endl;
+        cout << "2. Remove Secret Santa Entry" << endl;
+        cout << "Enter the number matching your menu choice:";
+        cin >> choice;
+
+        switch(choice){
+            case 1:
+                break;
+            case 2:
+                break;
+            default: 
+                continue;
+        }
+    }
     shuffleAndRandomize(santas);
-    genSantaFiles(santas, questions, false);
-    genSantaFiles(santas, questions, true);
+    genSantaFiles(santas, questions);
     
     
     // All code below is for testing data parsing
