@@ -137,7 +137,7 @@ void shuffleAndRandomize(vector<Santa>& s){
 
 }
 
-void genSantaFiles(vector<Santa>& s, vector<string>& q, bool admin){
+void genSantaFiles(vector<Santa>& s, vector<string>& q){
     string fileName, name, email;
     int age, sfuId, santaId, gifterId;
     int numOfQs = q.size();
