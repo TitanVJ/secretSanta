@@ -137,6 +137,38 @@ void shuffleAndRandomize(vector<Santa>& s){
 
 }
 
+void genSantaFiles(vector<Santa>& s, vector<string>& q, bool admin){
+    string fileName;
+    vector<string> details;
+    int numOfQs = q.size();
+    ofstream outFile;
+    
+    for(auto i = s.begin(); i != s.end(); ++i){
+        Santa santa = *i;
+        fileName = string("[") + to_string(santa.santaId) + "]" + santa.name + ".txt";
+        if(admin){
+            outFile.open("adminFiles/" + fileName);
+        }
+        else {
+            outFile.open("santaFiles/" + fileName);
+        }
+        outFile << "Name:\n" << santa.name << endl;
+        outFile << "Email:\n" << santa.email << endl;
+        outFile << "Age:\n" << santa.age << endl;
+        if(admin){
+            outFile << "SFU ID:\n" << santa.sfuId << endl;
+        }
+        details = santa.details;
+
+        for(int i = 0; i < numOfQs; ++i){
+            outFile << q[i] << endl << details[i] << endl << endl;
+        }
+        outFile.close();
+
+    }
+
+}
+
 int main(int argc, char *argv[]){
     /*
         Plan:
@@ -169,29 +201,31 @@ int main(int argc, char *argv[]){
     getQuestions(questions, argv[2]);
     genSantas(data, santas);
     shuffleAndRandomize(santas);
-
+    genSantaFiles(santas, questions, false);
+    genSantaFiles(santas, questions, true);
     
     
     // All code below is for testing data parsing
-    int h = 0;
-    cout << santas[0] << endl;
-    for(auto i = data.begin(); i != data.end(); ++i){
-        cout << "person " << h << endl;
-        for(auto j = i->begin(); j != i->end(); ++j){
-            cout << *j;
-            auto k = j;
-            k++;
-            if(k != i->end())
-                cout << " ";
-            //here it'll populate the data structure for the participants        }
-        }
-        cout << endl;
-        ++h;
-    }
 
-    for(auto i = questions.begin(); i != questions.end(); ++i){
-        cout << *i << endl;
-    }
+    // int h = 0;
+    // cout << santas[0] << endl;
+    // for(auto i = data.begin(); i != data.end(); ++i){
+    //     cout << "person " << h << endl;
+    //     for(auto j = i->begin(); j != i->end(); ++j){
+    //         cout << *j;
+    //         auto k = j;
+    //         k++;
+    //         if(k != i->end())
+    //             cout << " ";
+    //         //here it'll populate the data structure for the participants        }
+    //     }
+    //     cout << endl;
+    //     ++h;
+    // }
 
-    for(auto i = santas.begin(); i != santas.end(); ++i){cout << *i <<endl;}
+    // for(auto i = questions.begin(); i != questions.end(); ++i){
+    //     cout << *i << endl;
+    // }
+
+    // for(auto i = santas.begin(); i != santas.end(); ++i){cout << *i <<endl;}
 }
