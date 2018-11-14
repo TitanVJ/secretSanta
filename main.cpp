@@ -197,6 +197,47 @@ void genSantaFiles(vector<Santa>& s, vector<string>& q){
 
 }
 
+void sendTestEmails(vector<Santa>& s){
+    string emailFileName, smtpServer, userEmail, userPass, fromField, name, subject, line;
+    string emailMsg = "";
+    int port;
+    ifstream emailMessage;
+
+    // Get email information
+    cout << "This Test E-mail will act as a confirmation email to participants" << endl;
+    cout << "Enter filename for the file that contains the email's message (include path if not in current dir): ";
+    cin >> emailFileName;
+    
+    cout << "Note: Only the gmail SMTP Server will make a record of the email sent in you sent folder" << endl;
+    cout << "You can you any SMTP Server as long as you have the credentials to login, and then set the from field to whatever you want" << endl;
+    cout << "Consider the above note for the following prompts" << endl;
+
+    cout << "Enter the SMTP Server: ";
+    cin >> smtpServer;
+    cout << "Enter the port number for the SMTP Server: "; 
+    cin >> port;
+    cout << "Enter your login email for the given SMTP Server: ";
+    cin >> userEmail;
+    cout << "Enter your login password for the given SMTP Server: "; 
+    cin >> userPass;
+    
+    cout << "Enter the email to go in the \"FROM\" field of the email (this'll be the emails replies are sent to): "; 
+    cin >> fromField;
+    cout << "Enter name to appear in \"FROM\" field: ";
+    cin >> name;
+    cout << "Enter the email subject line: ";
+    cin >> subject;
+
+
+    emailMessage.open(emailFileName);
+    while(getline(emailMessage, line)){
+        emailMsg += line + '\n';
+    }
+
+    // Make the mailio objects
+
+}
+
 int main(int argc, char *argv[]){
     /*
         Plan:
@@ -237,7 +278,7 @@ int main(int argc, char *argv[]){
 
     //output menu
     int choice;
-    
+
     while(true){
         cout << "Menu:" << endl;
         cout << "1. Send Test Email" << endl;
@@ -254,8 +295,8 @@ int main(int argc, char *argv[]){
                 continue;
         }
     }
-    shuffleAndRandomize(santas);
-    genSantaFiles(santas, questions);
+    // shuffleAndRandomize(santas);
+    // genSantaFiles(santas, questions);
     
     
     // All code below is for testing data parsing
