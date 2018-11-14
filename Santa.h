@@ -14,7 +14,7 @@ class Santa{
         friend std::ostream& operator<<(std::ostream& output, const Santa&); 
         friend void shuffleAndRandomize(std::vector<Santa>& s);
         friend void genSanta(std::vector<std::vector<std::string>>& data, std::vector<Santa>& santas);
-        friend void genSantaFiles(std::vector<Santa>& s, std::vector<std::string>& q, bool admin);
+        friend void genSantaFiles(std::vector<Santa>& s, std::vector<std::string>& q);
 
     private:
         std::string name;
