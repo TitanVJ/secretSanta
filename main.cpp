@@ -141,7 +141,7 @@ void shuffleAndRandomize(vector<Santa>& s){
 }
 
 void genSantaFiles(vector<Santa>& s, vector<string>& q){
-    string fileName, name, email;
+    string fileName, pubFileName, name, email;
     int age, sfuId, santaId, gifterId;
     int numOfQs = q.size();
     vector<string> details;
@@ -167,9 +167,10 @@ void genSantaFiles(vector<Santa>& s, vector<string>& q){
         gifterId = santa.gifterId;
         details = santa.details;
         
-        fileName = string("_") + to_string(santa.santaId) + santa.name + ".txt";
+        fileName = string("_") + to_string(santa.santaId) + "_" + santa.name + ".txt";
+        pubFileName = "_" + to_string(santa.santaId) + ".txt";
         adminFile.open("adminFiles/" + fileName);
-        publicFile.open("publicFiles/" + fileName);
+        publicFile.open("publicFiles/" + pubFileName);
 
         // Master file entry
         masterFile << santaId << "," << gifterId << "," << sfuId << "," << name << "," << email << endl;
@@ -181,7 +182,7 @@ void genSantaFiles(vector<Santa>& s, vector<string>& q){
         adminFile << "SFU Id:\n" << sfuId << endl << endl;
         adminFile << "Santa Id" << santaId << endl << endl;
         adminFile << "Gifter Id" << gifterId << endl << endl;
-        adminFile << "For details look to file publicFiles/" << fileName << endl << endl;
+        adminFile << "For details look to file publicFiles/" << pubFileName << endl << endl;
 
         // Public files output
         publicFile << "Name:\n" << name << endl << endl;
