@@ -142,6 +142,8 @@ void genSantaFiles(vector<Santa>& s, vector<string>& q, bool admin){
     vector<string> details;
     int numOfQs = q.size();
     ofstream outFile;
+    system("exec mkdir adminFiles");
+    system("exec mkdir santaFiles");
     
     for(auto i = s.begin(); i != s.end(); ++i){
         Santa santa = *i;
@@ -175,7 +177,12 @@ int main(int argc, char *argv[]){
             1. parse data
             2. parse questions & cull invalidate emails
             3. create Santa objects
-            3.5 verify emails
+            OUTPUT MENU[test email, remove entry, shuffle and randomize]
+            have multiple menu's only give shuffle and randomize after test email and removal menu
+            maybe just auto shuffle after they exit first menu and ouput all the files
+
+            
+            3.5 verify emails [remove non sfu and test email]
             4. shuffle and randomize
             5. assign santa id and gifter id's
             6. output files both admin and public
@@ -207,25 +214,25 @@ int main(int argc, char *argv[]){
     
     // All code below is for testing data parsing
 
-    // int h = 0;
-    // cout << santas[0] << endl;
-    // for(auto i = data.begin(); i != data.end(); ++i){
-    //     cout << "person " << h << endl;
-    //     for(auto j = i->begin(); j != i->end(); ++j){
-    //         cout << *j;
-    //         auto k = j;
-    //         k++;
-    //         if(k != i->end())
-    //             cout << " ";
-    //         //here it'll populate the data structure for the participants        }
-    //     }
-    //     cout << endl;
-    //     ++h;
-    // }
+    int h = 0;
+    cout << santas[0] << endl;
+    for(auto i = data.begin(); i != data.end(); ++i){
+        cout << "person " << h << endl;
+        for(auto j = i->begin(); j != i->end(); ++j){
+            cout << *j;
+            auto k = j;
+            k++;
+            if(k != i->end())
+                cout << " ";
+            //here it'll populate the data structure for the participants        }
+        }
+        cout << endl;
+        ++h;
+    }
 
-    // for(auto i = questions.begin(); i != questions.end(); ++i){
-    //     cout << *i << endl;
-    // }
+    for(auto i = questions.begin(); i != questions.end(); ++i){
+        cout << *i << endl;
+    }
 
-    // for(auto i = santas.begin(); i != santas.end(); ++i){cout << *i <<endl;}
+    for(auto i = santas.begin(); i != santas.end(); ++i){cout << *i <<endl;}
 }
