@@ -211,19 +211,24 @@ void sendTestEmails(vector<Santa>& s){
     cout << "This Test E-mail will act as a confirmation email to participants" << endl;
     cout << "Enter filename for the file that contains the email's message (include path if not in current dir): ";
     cin >> emailFileName;
-    
+    cout << endl;
+
     cout << "Note: Only the gmail SMTP Server will make a record of the email sent in you sent folder" << endl;
     cout << "You can you any SMTP Server as long as you have the credentials to login, and then set the from field to whatever you want" << endl;
     cout << "Consider the above note for the following prompts" << endl;
+    cout << endl;
 
     cout << "Enter the SMTP Server: ";
     cin >> smtpServer;
     cout << "Enter the port number for the SMTP Server: "; 
     cin >> port;
+    cout << endl;
+
     cout << "Enter your login email for the given SMTP Server: ";
     cin >> userEmail;
     cout << "Enter your login password for the given SMTP Server: "; 
     cin >> userPass;
+    cout << endl;
     
     cout << "Enter the email to go in the \"FROM\" field of the email (this'll be the emails replies are sent to): "; 
     cin >> fromField;
