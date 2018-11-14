@@ -138,36 +138,62 @@ void shuffleAndRandomize(vector<Santa>& s){
 }
 
 void genSantaFiles(vector<Santa>& s, vector<string>& q, bool admin){
-    string fileName;
-    vector<string> details;
+    string fileName, name, email;
+    int age, sfuId, santaId, gifterId;
     int numOfQs = q.size();
-    ofstream outFile;
+    vector<string> details;
+    ofstream adminFile, publicFile, masterFile;
+
     system("exec mkdir adminFiles");
     system("exec mkdir santaFiles");
     
+    // This will be the master list of secret santa entrants
+    // it'll be csv file with santaId, gifterId, sfuId, name, email
+    masterFile.open("adminFiles/_0_MasterSantaList.cvs");
+    masterFile << "santaId,gifterId,sfuId,Name,Email" << endl;
+
     for(auto i = s.begin(); i != s.end(); ++i){
         Santa santa = *i;
-        fileName = string("_") + to_string(santa.santaId) + santa.name + ".txt";
-        if(admin){
-            outFile.open("adminFiles/" + fileName);
-        }
-        else {
-            outFile.open("santaFiles/" + fileName);
-        }
-        outFile << "Name:\n" << santa.name << endl;
-        outFile << "Email:\n" << santa.email << endl;
-        outFile << "Age:\n" << santa.age << endl;
-        if(admin){
-            outFile << "SFU ID:\n" << santa.sfuId << endl;
-        }
+
+        // Grab santa's data
+        name = santa.name;
+        email = santa.email; 
+        age = santa.age;
+        sfuId = santa.sfuId;
+        santaId = santa.santaId; 
+        gifterId = santa.gifterId;
         details = santa.details;
+        
+        fileName = string("_") + to_string(santa.santaId) + santa.name + ".txt";
+        adminFile.open("adminFiles/" + fileName);
+        publicFile.open("publicFiles/" + fileName);
 
-        for(int i = 0; i < numOfQs; ++i){
-            outFile << q[i] << endl << details[i] << endl << endl;
+        // Master file entry
+        masterFile << santaId << "," << gifterId << "," << sfuId << "," << name << "," << email << endl;
+
+        // Admin file output
+        adminFile << "Name:\n" << name << endl << endl;
+        adminFile << "Email:\n" << email << endl << endl;
+        adminFile << "Age:\n" << age << endl << endl;
+        adminFile << "SFU Id:\n" << sfuId << endl << endl;
+        adminFile << "Santa Id" << santaId << endl << endl;
+        adminFile << "Gifter Id" << gifterId << endl << endl;
+        adminFile << "For details look to file publicFiles/" << fileName << endl << endl;
+
+        // Public files output
+        publicFile << "Name:\n" << name << endl << endl;
+        publicFile << "Email:\n" << email << endl << endl;
+        publicFile << "Age:\n" << age << endl << endl;
+
+        // Details output for public files
+        for(int j = 0; j < numOfQs; ++j){
+            publicFile << q[j] << endl;
+            publicFile << details[j] << endl << endl;
         }
-        outFile.close();
-
     }
+    masterFile.close();
+    adminFile.close();
+    publicFile.close();
 
 }
 
