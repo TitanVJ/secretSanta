@@ -27,7 +27,7 @@ void Tokenize(string line, vector<string>& tokens, string delimiters = ",") {
 		tokens.push_back(token);
 }
 
-void sendEmails(string smtpServer, int port, string smtpEmail, string smtpPass, string fromEmail, string fromName, string msgContent, string subject, vector<vector<string>>& s){
+void sendEmails(string smtpEmail, string smtpPass, string fromName, string msgContent, string subject, vector<vector<string>>& s){
     vector<string> santa;
     string attachName;
     ofstream emailRecord;
@@ -38,7 +38,7 @@ void sendEmails(string smtpServer, int port, string smtpEmail, string smtpPass, 
 
     // Make the mailio objects
     try{
-        mailio::smtps conn(smtpServer, port);
+        mailio::smtps conn("mailgate.sfu.ca", 465);
         conn.authenticate(smtpEmail, smtpPass, mailio::smtps::auth_method_t::LOGIN);
 
         for(auto i = s.begin(); i != s.end(); ++i){
@@ -47,7 +47,7 @@ void sendEmails(string smtpServer, int port, string smtpEmail, string smtpPass, 
             //    0   ,    1    ,   2  ,   3 ,   4
             attachName = "santaFiles/_" + santa[1] + ".txt";
             mailio::message msg;
-            msg.from(mailio::mail_address(fromName, fromEmail));
+            msg.from(mailio::mail_address(fromName, smtpEmail));
             msg.add_recipient(mailio::mail_address(santa[3], santa[4]));
             msg.subject(subject);
             cout << endl;
@@ -109,9 +109,8 @@ int main(int argc, char* argv[]){
     inFile.close();
     
     // Get mailio information
-    string smtpServer, smtpEmail, smtpPass, fromEmail, fromName, msgFile, subject;
+    string smtpEmail, smtpPass, fromName, msgFile, subject;
     string msgContent = "";
-    int port;
     line = "";
     
 
@@ -126,20 +125,12 @@ int main(int argc, char* argv[]){
     cout << "Consider the above note for the following prompts" << endl;
     cout << endl;
 
-    cout << "Enter the SMTP Server: ";
-    cin >> smtpServer;
-    cout << "Enter the port number for the SMTP Server: "; 
-    cin >> port;
-    cout << endl;
-
-    cout << "Enter your login email for the given SMTP Server: ";
+    cout << "Enter your SFU email: ";
     cin >> smtpEmail;
-    cout << "Enter your login password for the given SMTP Server: "; 
+    cout << "Enter your SFU email login password: "; 
     cin >> smtpPass;
     cout << endl;
 
-    cout << "Enter the email to go in the \"FROM\" field of the email (this'll be the emails replies are sent to): "; 
-    cin >> fromEmail;
     cout << "Enter name to appear in \"FROM\" field: ";
     cin >> fromName;
     cout << "Enter the email subject line: ";
@@ -162,7 +153,7 @@ int main(int argc, char* argv[]){
     }
     cout << endl << "Starting the email process. " << endl;
 
-    sendEmails(smtpServer, port, smtpEmail, smtpPass, fromEmail, fromName, msgContent, subject, santas);
+    sendEmails(smtpEmail, smtpPass, fromName, msgContent, subject, santas);
     
 
     // below nested loop is for testing
