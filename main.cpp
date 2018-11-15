@@ -240,7 +240,7 @@ void sendTestEmails(vector<Santa>& s){
 
     emailMessage.open(emailFileName);
     while(getline(emailMessage, line)){
-        emailMsg += line;
+        emailMsg += line + "\r\n";
     }
     emailMessage.close();
 
@@ -257,7 +257,6 @@ void sendTestEmails(vector<Santa>& s){
             msg.subject(subject);
             msg.content(emailMsg);
             conn.submit(msg);
-
         }
     }
     catch (mailio::smtp_error& exc)
@@ -268,6 +267,7 @@ void sendTestEmails(vector<Santa>& s){
     {
         cout << exc.what() << endl;
     }
+    return;
 
 }
 
