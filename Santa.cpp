@@ -26,7 +26,7 @@ ostream& operator<<(ostream& out, const Santa& sObj){
     out << "SFU Id:\t" << sObj.sfuId << endl;
     out << "Santa Id:\t" << sObj.santaId << endl;
     out << "Gifter Id:\t" << sObj.gifterId << endl;
-    out << "Details:\tLook at file[" << sObj.santaId << "]. in admin/" << endl;
+    out << "Details:\tLook at file_" << sObj.santaId << "_. in admin/" << endl;
 
     return out;
 }
