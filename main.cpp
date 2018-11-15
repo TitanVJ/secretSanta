@@ -146,8 +146,6 @@ void genSantaFiles(vector<Santa>& s, vector<string>& q){
     int numOfQs = q.size();
     vector<string> details;
     ofstream adminFile, publicFile, masterFile;
-
-    system("exec mkdir santaFiles");
     
     // This will be the master list of secret santa entrants
     // it'll be csv file with santaId, gifterId, sfuId, name, email
@@ -201,8 +199,6 @@ void genSantaFiles(vector<Santa>& s, vector<string>& q){
 }
 
 void sendTestEmails(vector<Santa>& s){
-    system("exec mkdir adminFiles");
-
     string emailFileName, userEmail, userPass, name, subject, line;
     string emailMsg = "";
     ifstream emailMessage;
@@ -307,6 +303,8 @@ int main(int argc, char *argv[]){
        cout << "questions.txt is a text file containing the questions from the survey regarding the details asked about the participant" << endl;
        return 1;
    }
+    system("exec mkdir santaFiles");
+    system("exec mkdir adminFiles");
     
     vector<vector<string>> data;
     vector<string> questions;
