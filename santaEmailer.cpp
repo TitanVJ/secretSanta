@@ -28,7 +28,49 @@ void Tokenize(string line, vector<string>& tokens, string delimiters = ",") {
 }
 
 void sendEmails(string smtpServer, int port, string smtpEmail, string smtpPass, string fromEmail, string fromName, string msgContent, string subject, vector<vector<string>>& s){
+    vector<string> santa;
+    string attachName;
+    ofstream emailRecord;
+    ifstream attachFile;
 
+    emailRecord.open("adminFiles/finalEmailRecord.txt");
+    emailRecord << "Emails were sent to the following:" << endl;
+
+    // Make the mailio objects
+    try{
+        mailio::smtps conn(smtpServer, port);
+        conn.authenticate(smtpEmail, smtpPass, mailio::smtps::auth_method_t::LOGIN);
+
+        for(auto i = s.begin(); i != s.end(); ++i){
+            santa = *i;
+            // santaId, gifterId, SFUid, Name, Email
+            //    0   ,    1    ,   2  ,   3 ,   4
+            attachName = "santaFiles/_" + santa[1] + ".txt";
+            mailio::message msg;
+            msg.from(mailio::mail_address(fromName, fromEmail));
+            msg.add_recipient(mailio::mail_address(santa[3], santa[4]));
+            msg.subject(subject);
+            cout << endl;
+            attachFile.open(attachName);
+            msg.attach(attachFile, attachName, mailio::message::media_type_t::TEXT, "txt");
+
+            msg.content(msgContent);
+            conn.submit(msg);
+            attachFile.close();
+
+            // Make entry in email record fild
+            emailRecord << "SantaId:\t" << santa[0] << "\tEmail:\t" << santa[4] << endl;
+        }
+        emailRecord.close();
+    }
+    catch (mailio::smtp_error& exc)
+    {
+        cout << exc.what() << endl;
+    }
+    catch (mailio::dialog_error& exc)
+    {
+        cout << exc.what() << endl;
+    }
 }
 
 int main(int argc, char* argv[]){
@@ -71,8 +113,7 @@ int main(int argc, char* argv[]){
     string msgContent = "";
     int port;
     line = "";
-    // santaId, gifterId, SFUid, Name, Email
-    //    0   ,    1    ,   2  ,   3 ,   4
+    
 
     // Get email information
     cout << "This Test E-mail will contain info about the Secret Santa giftee." << endl;
@@ -119,22 +160,10 @@ int main(int argc, char* argv[]){
         if(test == 'y' || test == 'Y')
             break;
     }
-    cout << endl << "Starting emailing process. " << endl;
-    
+    cout << endl << "Starting the email process. " << endl;
+
     sendEmails(smtpServer, port, smtpEmail, smtpPass, fromEmail, fromName, msgContent, subject, santas);
-    // Make the mailio objects
-    try{
-        mailio::smtps conn(smtpServer, port);
-        conn.authenticate(smtpEmail, smtpPass, mailio::smtps::auth_method_t::LOGIN);
-    }
-    catch (mailio::smtp_error& exc)
-    {
-        cout << exc.what() << endl;
-    }
-    catch (mailio::dialog_error& exc)
-    {
-        cout << exc.what() << endl;
-    }
+    
 
     // below nested loop is for testing
     for(auto i = santas.begin(); i != santas.end(); ++i){
