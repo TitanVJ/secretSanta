@@ -177,8 +177,8 @@ void genSantaFiles(vector<Santa>& s, vector<string>& q){
         adminFile << "Email:\n" << email << endl << endl;
         adminFile << "Age:\n" << age << endl << endl;
         adminFile << "SFU Id:\n" << sfuId << endl << endl;
-        adminFile << "Santa Id" << santaId << endl << endl;
-        adminFile << "Gifter Id" << gifterId << endl << endl;
+        adminFile << "Santa Id:\n" << santaId << endl << endl;
+        adminFile << "Gifter Id:\n" << gifterId << endl << endl;
         adminFile << "For details look to file santaFiles/" << pubFileName << endl << endl;
 
         // Public files output
@@ -188,7 +188,7 @@ void genSantaFiles(vector<Santa>& s, vector<string>& q){
 
         // Details output for public files
         for(int j = 0; j < numOfQs; ++j){
-            publicFile << q[j] << endl;
+            publicFile << q[j] << ":" << endl;
             publicFile << details[j] << endl << endl;
         }
         adminFile.close();
@@ -305,7 +305,7 @@ int main(int argc, char *argv[]){
    }
     system("exec mkdir santaFiles");
     system("exec mkdir adminFiles");
-    
+
     vector<vector<string>> data;
     vector<string> questions;
     vector<Santa> santas;
