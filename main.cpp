@@ -170,7 +170,7 @@ void genSantaFiles(vector<Santa>& s, vector<string>& q){
         fileName = string("_") + to_string(santa.santaId) + "_" + santa.name + ".txt";
         pubFileName = "_" + to_string(santa.santaId) + ".txt";
         adminFile.open("adminFiles/" + fileName);
-        publicFile.open("publicFiles/" + pubFileName);
+        publicFile.open("santaFiles/" + pubFileName);
 
         // Master file entry
         masterFile << santaId << "," << gifterId << "," << sfuId << "," << name << "," << email << endl;
@@ -182,7 +182,7 @@ void genSantaFiles(vector<Santa>& s, vector<string>& q){
         adminFile << "SFU Id:\n" << sfuId << endl << endl;
         adminFile << "Santa Id" << santaId << endl << endl;
         adminFile << "Gifter Id" << gifterId << endl << endl;
-        adminFile << "For details look to file publicFiles/" << pubFileName << endl << endl;
+        adminFile << "For details look to file santaFiles/" << pubFileName << endl << endl;
 
         // Public files output
         publicFile << "Name:\n" << name << endl << endl;
@@ -194,10 +194,10 @@ void genSantaFiles(vector<Santa>& s, vector<string>& q){
             publicFile << q[j] << endl;
             publicFile << details[j] << endl << endl;
         }
+        adminFile.close();
+        publicFile.close();
     }
     masterFile.close();
-    adminFile.close();
-    publicFile.close();
 
 }
 
@@ -284,7 +284,8 @@ void removeEntries(vector<Santa>& s){
             Santa santa = *i; 
             if (santa.email == email){
                 // delete entry in vector
-                cout << "Email " << email << " found and removed" << endl;
+                cout << "Removing Secret Santa entrant: " << endl << santa << endl;
+                s.erase(i);
                 break;
             }
         }
@@ -371,27 +372,4 @@ int main(int argc, char *argv[]){
     cout << "Everything should now be done." << endl;
     cout << "Use SantaEmailer tomorrow to send the final email containing the required data to the Secret Santa participants." << endl;
 
-    // All code below is for testing data parsing
-
-    // int h = 0;
-    // cout << santas[0] << endl;
-    // for(auto i = data.begin(); i != data.end(); ++i){
-    //     cout << "person " << h << endl;
-    //     for(auto j = i->begin(); j != i->end(); ++j){
-    //         cout << *j;
-    //         auto k = j;
-    //         k++;
-    //         if(k != i->end())
-    //             cout << " ";
-    //         //here it'll populate the data structure for the participants        }
-    //     }
-    //     cout << endl;
-    //     ++h;
-    // }
-
-    // for(auto i = questions.begin(); i != questions.end(); ++i){
-    //     cout << *i << endl;
-    // }
-
-    // for(auto i = santas.begin(); i != santas.end(); ++i){cout << *i <<endl;}
 }
