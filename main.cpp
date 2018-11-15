@@ -301,44 +301,28 @@ void removeEntries(vector<Santa>& s){
 }
 
 int main(int argc, char *argv[]){
-    /*
-        Plan:
-            1. parse data
-            2. parse questions & cull invalidate emails
-            3. create Santa objects
-
-            OUTPUT MENU[test email, remove entry, shuffle and randomize]
-            have multiple menu's only give shuffle and randomize after test email and removal menu
-            maybe just auto shuffle after they exit first menu and ouput all the files
-
-
-            3.5 verify emails [remove non sfu and test email]
-            4. shuffle and randomize
-            5. assign santa id and gifter id's
-            6. output files both admin and public
-            7. output menu to terminal
-            menu options: 
-                - view data
-                - send emails
-    */
+    
    if(argc < 3){
-       cout << "Usage: ./{name} data.txt questions.txt" << endl;
+       cout << "Usage: ./SantaParser data.txt questions.txt" << endl;
        cout << "data.txt is survey data file downloaded from websurvey" << endl;
        cout << "questions.txt is a text file containing the questions from the survey regarding the details asked about the participant" << endl;
        return 1;
    }
-
-    // currently acting as placeholder for the all the data in the user profiles
-    // once ready this vector will be holding Santa profiles
+    
     vector<vector<string>> data;
     vector<string> questions;
     vector<Santa> santas;
 
+    cout << "Parsing websurvey data." << endl;
     parseData(data, argv[1]);
+
+    cout << "Parsing websurvey questions." << endl;
     getQuestions(questions, argv[2]);
+
+    cout << "Generating Secret Santa profiles." << endl;
     genSantas(data, santas);
 
-    //output menu
+    // Output menue
     int choice;
     bool menu = true;
     while(menu){
@@ -364,11 +348,12 @@ int main(int argc, char *argv[]){
         }
         choice = NULL;
     }
-    cout << "Shuffling and Randomizing" << endl;
+    cout << "Shuffling and Randomizing Secret Santa profiles." << endl;
     shuffleAndRandomize(santas);
-    cout << "Generating Secret Santa files" << endl;
+    cout << "Generating Secret Santa files." << endl;
     genSantaFiles(santas, questions);
     
+    cout << "Total number of participants in Secret Santa: " << santas.size() << endl << endl;
     cout << "Everything should now be done." << endl;
     cout << "Use SantaEmailer tomorrow to send the final email containing the required data to the Secret Santa participants." << endl;
 
