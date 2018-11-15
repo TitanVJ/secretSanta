@@ -293,7 +293,7 @@ void removeEntries(vector<Santa>& s){
 
         cout << "Do you have more entrants to delete? (Y or N): "; 
         cin >> yN;
-        if(yN != "Y"){
+        if(yN != "Y" || yN != "y"){
             cont = false;
         }
     }
