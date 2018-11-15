@@ -229,7 +229,7 @@ void sendTestEmails(vector<Santa>& s){
     cout << "Enter your login password for the given SMTP Server: "; 
     cin >> userPass;
     cout << endl;
-    
+
     cout << "Enter the email to go in the \"FROM\" field of the email (this'll be the emails replies are sent to): "; 
     cin >> fromField;
     cout << "Enter name to appear in \"FROM\" field: ";
@@ -272,24 +272,24 @@ void sendTestEmails(vector<Santa>& s){
 }
 
 void removeEntries(vector<Santa>& s){
-    string name, yN;
+    string email, yN;
     bool cont = true;
     bool found = false;
 
     while(cont){
-        cout << "Enter name of participant to remove";
-        cin >> name;
+        cout << "Enter email of participant to remove: ";
+        cin >> email;
 
         for (auto i = s.begin(); i != s.end(); ++i){
             Santa santa = *i; 
-            if (santa.name == name){
+            if (santa.email == email){
                 // delete entry in vector
-                cout << "Entrant " << name << " found and removed" << endl;
+                cout << "Email " << email << " found and removed" << endl;
                 break;
             }
         }
         if(!found)
-            cout << "Entrant" << name << " not found in list, make sure you typed the name correctly." << endl;
+            cout << "Email" << email << " not found in list, make sure you typed the name correctly." << endl;
 
         cout << "Do you have more entrants to delete? (Y or N): "; 
         cin >> yN;
@@ -363,31 +363,35 @@ int main(int argc, char *argv[]){
         }
         choice = NULL;
     }
-    // shuffleAndRandomize(santas);
-    // genSantaFiles(santas, questions);
+    cout << "Shuffling and Randomizing" << endl;
+    shuffleAndRandomize(santas);
+    cout << "Generating Secret Santa files" << endl;
+    genSantaFiles(santas, questions);
     
-    
+    cout << "Everything should now be done." << endl;
+    cout << "Use SantaEmailer tomorrow to send the final email containing the required data to the Secret Santa participants." << endl;
+
     // All code below is for testing data parsing
 
-    int h = 0;
-    cout << santas[0] << endl;
-    for(auto i = data.begin(); i != data.end(); ++i){
-        cout << "person " << h << endl;
-        for(auto j = i->begin(); j != i->end(); ++j){
-            cout << *j;
-            auto k = j;
-            k++;
-            if(k != i->end())
-                cout << " ";
-            //here it'll populate the data structure for the participants        }
-        }
-        cout << endl;
-        ++h;
-    }
+    // int h = 0;
+    // cout << santas[0] << endl;
+    // for(auto i = data.begin(); i != data.end(); ++i){
+    //     cout << "person " << h << endl;
+    //     for(auto j = i->begin(); j != i->end(); ++j){
+    //         cout << *j;
+    //         auto k = j;
+    //         k++;
+    //         if(k != i->end())
+    //             cout << " ";
+    //         //here it'll populate the data structure for the participants        }
+    //     }
+    //     cout << endl;
+    //     ++h;
+    // }
 
-    for(auto i = questions.begin(); i != questions.end(); ++i){
-        cout << *i << endl;
-    }
+    // for(auto i = questions.begin(); i != questions.end(); ++i){
+    //     cout << *i << endl;
+    // }
 
-    for(auto i = santas.begin(); i != santas.end(); ++i){cout << *i <<endl;}
+    // for(auto i = santas.begin(); i != santas.end(); ++i){cout << *i <<endl;}
 }
