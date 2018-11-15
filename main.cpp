@@ -147,7 +147,6 @@ void genSantaFiles(vector<Santa>& s, vector<string>& q){
     vector<string> details;
     ofstream adminFile, publicFile, masterFile;
 
-    system("exec mkdir adminFiles");
     system("exec mkdir santaFiles");
     
     // This will be the master list of secret santa entrants
@@ -202,6 +201,8 @@ void genSantaFiles(vector<Santa>& s, vector<string>& q){
 }
 
 void sendTestEmails(vector<Santa>& s){
+    system("exec mkdir adminFiles");
+
     string emailFileName, userEmail, userPass, name, subject, line;
     string emailMsg = "";
     ifstream emailMessage;
