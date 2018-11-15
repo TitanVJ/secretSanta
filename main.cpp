@@ -244,6 +244,10 @@ void sendTestEmails(vector<Santa>& s){
     }
     emailMessage.close();
 
+    ofstream emailRecord;
+    emailRecord.open("adminFiles/testEmailRecord.txt");
+    emailRecord << "Test emails sent to the following (successful or not):" << endl;
+
     // Make the mailio objects
     try{
         mailio::smtps conn(smtpServer, port);
@@ -257,7 +261,11 @@ void sendTestEmails(vector<Santa>& s){
             msg.subject(subject);
             msg.content(emailMsg);
             conn.submit(msg);
+
+            // Make entry in test email record
+            emailRecord << "SantaId:\t" << santa.santaId << "\tEmail:\t" << santa.email << endl;
         }
+        emailRecord.close();
     }
     catch (mailio::smtp_error& exc)
     {
