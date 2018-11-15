@@ -3,8 +3,8 @@
 #include <vector>
 #include <algorithm>
 #include <string>
-#include <mailio/message.hpp>
-#include <mailio/smtp.hpp>
+// #include <mailio/message.hpp>
+// #include <mailio/smtp.hpp>
 
 using namespace std;
 
@@ -28,10 +28,10 @@ void Tokenize(string line, vector<string>& tokens, string delimiters = ",") {
 }
 
 int main(int argc, char* argv[]){
-    if(argc < 2){
-        cout << "Usage: ./santaEmailer.o message.txt\nWhere message.txt is the file containing the message you want in the email sent." << endl;
-        return;
-    }
+    // if(argc < 2){
+    //     cout << "Usage: ./santaEmailer.o message.txt\nWhere message.txt is the file containing the message you want in the email sent." << endl;
+    //     return;
+    // }
 
     /*
         1. load in master list
@@ -44,7 +44,39 @@ int main(int argc, char* argv[]){
             profit
         
     */
-   cout << "Ho Ho Ho" << endl << "Welcome the Secret Santa Emailer" << endl << "Let\'s begin!!" << endl;
-   cout << "Reading Secret Santa Master list" << endl;
+    vector<vector<string>> santas;
+    vector<string> details;
+    ifstream inFile;
+    string line;
+    cout << "Ho Ho Ho" << endl << "Welcome the Secret Santa Emailer" << endl << "Let\'s begin!!" << endl;
+    cout << "Reading Secret Santa Master list" << endl;
+
+    inFile.open("adminFiles/_0_MasterSantaList.cvs");
+    getline(inFile, line);
+    line = "";
+
+    while(getline(inFile, line)){
+        Tokenize(line, details);
+        santas.push_back(details);
+        details.clear();
+    }
+    inFile.close();
+    
+    // Get mailio information
+    string smtpServer, smtpEmail, smtpPass, fromEmail, fromName, msgFile, subject;
+    int port;
+    // santaId, gifterId, SFUid, Name, Email
+    //    0   ,    1    ,   2  ,   3 ,   4
+
+
+    // below nested loop is for testing
+    for(auto i = santas.begin(); i != santas.end(); ++i){
+        details = *i;
+        cout << "=============================" << endl;
+        for (auto j = details.begin(); j != details.end(); ++j){
+            cout << *j << endl;
+        }
+        cout << "=============================" << endl;
+    }
 
 }
