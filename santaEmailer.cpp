@@ -1,8 +1,31 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <algorithm>
+#include <string>
+#include <mailio/message.hpp>
+#include <mailio/smtp.hpp>
 
 using namespace std;
+
+void Tokenize(string line, vector<string>& tokens, string delimiters = ",") {
+	string token = "";
+	string OneCharString = " ";
+	for (int i = 0; i < line.size(); i++)
+		if (find(delimiters.begin(), delimiters.end(), line[i]) != delimiters.end()) // line[i] is one of the delimiter characters
+		{
+			tokens.push_back(token);
+			token = "";
+		}
+		else
+		{
+			OneCharString[0] = line[i];
+			token += OneCharString;
+		}
+
+	if (token != "")
+		tokens.push_back(token);
+}
 
 int main(int argc, char* argv[]){
     if(argc < 2){
@@ -11,9 +34,17 @@ int main(int argc, char* argv[]){
     }
 
     /*
-        -read in the master list
-        -present menu with option: test email, final email
-        -if test, saying to remove failed entries from original data then to delete all data generated from the santa parser before rerunning it with the newly ammended data
-        - after that to rerun this program once the final emails are to be sent.
+        1. load in master list
+        2. sort by santaId or index order == santaId order
+        3. send emails
+
+        sending emails:
+            set recipient as dude from master list, 
+            grab attachment file as recip's _gifterid.txt
+            profit
+        
     */
+   cout << "Ho Ho Ho" << endl << "Welcome the Secret Santa Emailer" << endl << "Let\'s begin!!" << endl;
+   cout << "Reading Secret Santa Master list" << endl;
+
 }
