@@ -27,6 +27,10 @@ void Tokenize(string line, vector<string>& tokens, string delimiters = ",") {
 		tokens.push_back(token);
 }
 
+void sendEmails(string smtpServer, int port, string smtpEmail, string smtpPass, string fromEmail, string fromName, string msgContent, string subject, vector<vector<string>>& s){
+
+}
+
 int main(int argc, char* argv[]){
     // if(argc < 2){
     //     cout << "Usage: ./santaEmailer.o message.txt\nWhere message.txt is the file containing the message you want in the email sent." << endl;
@@ -48,7 +52,7 @@ int main(int argc, char* argv[]){
     vector<string> details;
     ifstream inFile;
     string line;
-    cout << "Ho Ho Ho" << endl << "Welcome the Secret Santa Emailer" << endl << "Let\'s begin!!" << endl;
+    cout << "Ho Ho Ho" << endl << "Welcome the Secret Santa Emailer" << endl << "Let\'s begin!!" << endl << endl;
     cout << "Reading Secret Santa Master list" << endl;
 
     inFile.open("adminFiles/_0_MasterSantaList.cvs");
@@ -63,9 +67,10 @@ int main(int argc, char* argv[]){
     inFile.close();
     
     // Get mailio information
-    string smtpServer, smtpEmail, smtpPass, fromEmail, fromName, msgFile, subject, line;
+    string smtpServer, smtpEmail, smtpPass, fromEmail, fromName, msgFile, subject;
     string msgContent = "";
     int port;
+    line = "";
     // santaId, gifterId, SFUid, Name, Email
     //    0   ,    1    ,   2  ,   3 ,   4
 
@@ -107,6 +112,16 @@ int main(int argc, char* argv[]){
     }
     emailMsg.close();
 
+    char test;
+    while(true){
+        cout << "Do you want to start sending the emails? (Y or N): ";
+        cin >> test;
+        if(test == 'y' || test == 'Y')
+            break;
+    }
+    cout << endl << "Starting emailing process. " << endl;
+    
+    sendEmails(smtpServer, port, smtpEmail, smtpPass, fromEmail, fromName, msgContent, subject, santas);
     // Make the mailio objects
     try{
         mailio::smtps conn(smtpServer, port);
