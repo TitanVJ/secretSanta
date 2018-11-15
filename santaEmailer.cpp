@@ -3,8 +3,8 @@
 #include <vector>
 #include <algorithm>
 #include <string>
-// #include <mailio/message.hpp>
-// #include <mailio/smtp.hpp>
+#include <mailio/message.hpp>
+#include <mailio/smtp.hpp>
 
 using namespace std;
 
@@ -106,6 +106,20 @@ int main(int argc, char* argv[]){
         msgContent += line + "\r\n";
     }
     emailMsg.close();
+
+    // Make the mailio objects
+    try{
+        mailio::smtps conn(smtpServer, port);
+        conn.authenticate(smtpEmail, smtpPass, mailio::smtps::auth_method_t::LOGIN);
+    }
+    catch (mailio::smtp_error& exc)
+    {
+        cout << exc.what() << endl;
+    }
+    catch (mailio::dialog_error& exc)
+    {
+        cout << exc.what() << endl;
+    }
 
     // below nested loop is for testing
     for(auto i = santas.begin(); i != santas.end(); ++i){
