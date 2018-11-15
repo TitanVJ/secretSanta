@@ -120,11 +120,6 @@ int main(int argc, char* argv[]){
     cin >> msgFile;
     cout << endl;
 
-    cout << "Note: Only the gmail SMTP Server will make a record of the email sent in your sent folder" << endl;
-    cout << "You can you any SMTP Server as long as you have the credentials to login, and then set the from field to whatever you want" << endl;
-    cout << "Consider the above note for the following prompts" << endl;
-    cout << endl;
-
     cout << "Enter your SFU email: ";
     cin >> smtpEmail;
     cout << "Enter your SFU email login password: "; 
