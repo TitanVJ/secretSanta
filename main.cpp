@@ -202,9 +202,8 @@ void genSantaFiles(vector<Santa>& s, vector<string>& q){
 }
 
 void sendTestEmails(vector<Santa>& s){
-    string emailFileName, smtpServer, userEmail, userPass, fromField, name, subject, line;
+    string emailFileName, userEmail, userPass, name, subject, line;
     string emailMsg = "";
-    int port;
     ifstream emailMessage;
 
     // Get email information
@@ -213,25 +212,16 @@ void sendTestEmails(vector<Santa>& s){
     cin >> emailFileName;
     cout << endl;
 
-    cout << "Note: Only the gmail SMTP Server will make a record of the email sent in your sent folder" << endl;
-    cout << "You can you any SMTP Server as long as you have the credentials to login, and then set the from field to whatever you want" << endl;
-    cout << "Consider the above note for the following prompts" << endl;
+    cout << "Note: This part requires a Gmail account. Don't ask why" << endl;
+    cout << "If you have 2-factor authentication enabled hit ctrl+c and go look at the repo before proceeding." << endl;
     cout << endl;
 
-    cout << "Enter the SMTP Server: ";
-    cin >> smtpServer;
-    cout << "Enter the port number for the SMTP Server: "; 
-    cin >> port;
-    cout << endl;
-
-    cout << "Enter your login email for the given SMTP Server: ";
+    cout << "Enter your Gmail login (including the \"@gmail.com\"): ";
     cin >> userEmail;
-    cout << "Enter your login password for the given SMTP Server: "; 
+    cout << "Enter your Gmail login password OR app password (look to repo if not sure): "; 
     cin >> userPass;
     cout << endl;
 
-    cout << "Enter the email to go in the \"FROM\" field of the email (this'll be the emails replies are sent to): "; 
-    cin >> fromField;
     cout << "Enter name to appear in \"FROM\" field: ";
     cin >> name;
     cout << "Enter the email subject line: ";
@@ -250,13 +240,13 @@ void sendTestEmails(vector<Santa>& s){
 
     // Make the mailio objects
     try{
-        mailio::smtps conn(smtpServer, port);
+        mailio::smtps conn("smtp.gmail.com", 465);
         conn.authenticate(userEmail, userPass, mailio::smtps::auth_method_t::LOGIN);
 
         for(auto i = s.begin(); i != s.end(); ++i){
             Santa santa = *i;
             mailio::message msg;
-            msg.from(mailio::mail_address(name, fromField));
+            msg.from(mailio::mail_address(name, userEmail));
             msg.add_recipient(mailio::mail_address(santa.name, santa.email));
             msg.subject(subject);
             msg.content(emailMsg);
