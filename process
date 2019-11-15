@@ -1,0 +1,28 @@
+run main
+    - parses the data
+    - parses the questions
+    - sends test email with some info about the secret santa event
+    - allows removal of bounced emails
+    - creates the santa files and master list
+        - done last so only files of valid users are made
+
+
+run santaEmailer
+    - sends the final emails with secret santa detail files
+
+
+
+Python Plan: 
+
+    - make 1 main file and abstract certain features into their own files and import them
+    - add if name main for testing to each module 
+    - have a config file so don't have to ask for bunch of stuff
+    - verify config file is filled out in main before calling any module functions
+    - keep menu system from cpp version
+
+    Modules:
+        - data parser, does both websurvey data and questions
+        - emailer, does test and final
+        - santa generator, shuffles santas and generates the files (santa files and master files/list)
+        - something for removing? or add to data parser? 
+    
